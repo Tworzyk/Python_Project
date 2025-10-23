@@ -5,6 +5,7 @@ from logic import KsiazkaAdresowa
 name = input("Cześć jak się nazywasz?")
 again = True
 
+ksiazkaAdresowa = KsiazkaAdresowa()
 while again:
 
     print(f"--- Kontakty ---\nWitaj {name} w programie zarządzania kontaktami, wybierz zadanie do wykonania:")
@@ -14,19 +15,20 @@ while again:
     user = int(input("Podaj numer: "))
 
     if user == 1:
-        dodajKontakt()
+      ksiazkaAdresowa.dodajKontakt()
     elif user == 2:
-        usunKontakt()
+        ksiazkaAdresowa.usunKontakt()
     elif user == 3:
-        wyszukajKontakt()
+        pass
     elif user == 4:
-        edytujKontakt()
+        pass
     elif user == 5:
-        wyswietlKontakt()
+        ksiazkaAdresowa.wyswietl()
     elif user == 6:
-        imFeelingLucky()
+        ksiazkaAdresowa.imFeelingLucky()
     elif user == 7:
         print(f"Dziękujemy za skorzystanie z naszego programu! Do zobaczenia {name}!")
+        ksiazkaAdresowa.zapiszDoPliku()
         again = False
     else:
         print("Prosze podać poprawną wartość! ")
