@@ -103,9 +103,9 @@ class KsiazkaAdresowa:
 
 
     def wczytajZPliku(self):
-        with open("KsiazkaTelefoniczna.csv","r") as file:
-            reader = csv.reader(file)
-            try:
+        try:
+            with open("KsiazkaTelefoniczna.csv","r") as file:
+                reader = csv.reader(file)
                 for row in reader:
                     name = row[0]
                     surname = row[1]
@@ -113,8 +113,8 @@ class KsiazkaAdresowa:
                     email = row[3]
                     kontakt = Kontakt(name,surname,phone,email)
                     self.dane.append(kontakt)
-            except FileNotFoundError:
-                pass
+        except FileNotFoundError:
+            pass
 
 
     def zapiszDoPliku(self):
