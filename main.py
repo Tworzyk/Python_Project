@@ -2,7 +2,7 @@ import csv
 
 from logic import KsiazkaAdresowa
 
-name = input("Cześć jak się nazywasz?")
+name = input("Cześć jak się nazywasz? ")
 again = True
 
 ksiazkaAdresowa = KsiazkaAdresowa()
@@ -19,6 +19,7 @@ while again:
     elif user == 2:
         ksiazkaAdresowa.usunKontakt()
     elif user == 3:
+        ##ksiazkaAdresowa.wyszukajKontakt()
         pass
     elif user == 4:
         pass

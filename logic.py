@@ -2,13 +2,17 @@ import csv
 import random
 from warnings import catch_warnings
 from models import Kontakt, Kontakt_id, id_manager
+from logicdata import emailValidator,numberValidator
+from File import saveToFile, loadFromFile
+
 
 class KsiazkaAdresowa:
 
-    def __init__(self, file="KsiazkaTelefoniczna.csv"):
-        self.file = file
-        self.dane = []
-        self.wczytajZPliku()
+    def __init__(self):
+        wczytaj = loadFromFile()
+        self.zapisz = saveToFile()
+        self.dane = wczytaj.load()
+
 #powinno byc git juz
     #trzeba dopisac aby nie potwarzaly sie numery oraz maila, chyba najprosciej  dodatkowa metode ktora  bedzie leciec po liscie i sprawdzac i po sprawie
     def dodajKontakt(self):
@@ -17,9 +21,14 @@ class KsiazkaAdresowa:
         phone = input("Podaj numer telefonu: ")
         email = input("Podaj adres email: ")
 
+        checkphone = numberValidator()
+        checkemail = emailValidator()
+        if (checkphone.checkifisvalid(phone) and checkemail.checkifisvalid(email)) is False:
+            print("Email lub nr telefonu jest bledny")
+            return
         kontakt = Kontakt(name, surname, phone, email)
         self.dane.append(kontakt)
-        self.zapiszDoPliku()
+        self.zapisz.save(self.dane) ## ale po co za kazdym razem zapisywac ? lepiej zrobic jeden zapis ogolny !?
         print("Konktakt dodany poprawnie!")
 
 
@@ -56,7 +65,7 @@ class KsiazkaAdresowa:
             if kontakt is not None:
                 kontakt.delete()
                 self.dane.remove(kontakt)
-                self.zapiszDoPliku()
+                self.zapiszDoPliku() ##znowu ?! jeset sens to zapisywac za kazdyn razem?? nie lepiej raz na zakonczenie programu ?
                 print("Kontakty został usunięty poprawnie!")
             else:
                 print("Wybrany kontakt o podanym id nie istnieje!")
@@ -92,6 +101,7 @@ class KsiazkaAdresowa:
             return
         for kontakt in self.dane:
             print(kontakt)
+
 # za ulepszenia poza wymagania sa dod punkty....... chce ta pierdole zrobic ze randomowo ci daje kontakt cos jak googlowskie im feeling lucky
     def imFeelingLucky(self):
         size = len(self.dane)
@@ -102,27 +112,8 @@ class KsiazkaAdresowa:
                 print(kontakt)
 
 
-    def wczytajZPliku(self):
-        try:
-            with open("KsiazkaTelefoniczna.csv","r") as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    name = row[0]
-                    surname = row[1]
-                    phone = row[2]
-                    email = row[3]
-                    kontakt = Kontakt(name,surname,phone,email)
-                    self.dane.append(kontakt)
-        except FileNotFoundError:
-            pass
-
-
     def zapiszDoPliku(self):
-        with open("KsiazkaTelefoniczna.csv","w") as file:
-            writer = csv.writer(file)
-            for i in self.dane:
-                writer.writerow([i.name,i.surname,i.phone,i.email]) #id czy konieczny tez zapis id?raczej
-
+         self.zapisz.save(self.dane)
 
 # test = KsiazkaAdresowa([])
 
