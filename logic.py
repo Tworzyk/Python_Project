@@ -2,7 +2,7 @@ import csv
 import random
 from warnings import catch_warnings
 from models import Kontakt, Kontakt_id, id_manager
-from logicdata import emailValidator,numberValidator
+from logicdata import emailValidator, numberValidator, phoneUnique, emailUnique
 from File import saveToFile, loadFromFile
 
 
@@ -20,12 +20,19 @@ class KsiazkaAdresowa:
         surname = input("Podaj nazwisko: ")
         phone = input("Podaj numer telefonu: ")
         email = input("Podaj adres email: ")
-
         checkphone = numberValidator()
         checkemail = emailValidator()
+
         if (checkphone.checkifisvalid(phone) and checkemail.checkifisvalid(email)) is False:
             print("Email lub nr telefonu jest bledny")
             return
+
+        checkphoneunique = phoneUnique(phone,self.dane)
+        checkemailunique = emailUnique(email,self.dane)
+        if not (checkphoneunique.checkIsUnique() and checkemailunique.checkIsUnique()):
+            print("Ten email lub nr telefonu istnieje w bazie")
+            return
+
         kontakt = Kontakt(name, surname, phone, email)
         self.dane.append(kontakt)
         self.zapisz.save(self.dane) ## ale po co za kazdym razem zapisywac ? lepiej zrobic jeden zapis ogolny !?
@@ -105,15 +112,12 @@ class KsiazkaAdresowa:
 # za ulepszenia poza wymagania sa dod punkty....... chce ta pierdole zrobic ze randomowo ci daje kontakt cos jak googlowskie im feeling lucky
     def imFeelingLucky(self):
         size = len(self.dane)
-        random_number = random.randrange(1,size)
+        random_number = random.randrange(1,size+1)
 
         for kontakt in self.dane:
             if kontakt.id == random_number:
                 print(kontakt)
 
-
-    def zapiszDoPliku(self):
-         self.zapisz.save(self.dane)
 
 # test = KsiazkaAdresowa([])
 
