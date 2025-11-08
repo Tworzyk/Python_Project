@@ -18,7 +18,9 @@ class Kontakt_id:
 
     def __str__(self):
         return f"Next ID: {self._next_id}, Free ID's: {self._free_ids}"
-
+    @property
+    def freeid(self):
+        return self._free_ids
 
 id_manager = Kontakt_id()
 class Kontakt:
@@ -36,20 +38,48 @@ class Kontakt:
     def __str__(self):
         return f" ID:{self._id} Imie: {self._name}, nazwisko: {self._surname}, phone: {self._phone}, email:{self._email}"
 
+
+    @property
+    def kontakt(self):
+        return self
+
     @property
     def id(self):
         return self._id
     @property
     def name(self):
         return self._name
+
+    @name.setter
+    def name(self, name):
+        self._name = name
+
+
     @property
     def surname(self):
         return self._surname
+
+    @surname.setter
+    def surname(self, surname):
+        self._surname = surname
+
     @property
     def phone(self):
         return self._phone
+
+    @phone.setter
+    def phone(self, phone):
+        self._phone = phone
+
     @property
     def email(self):
         return self._email
+
+    @email.setter
+    def email(self, email):
+        self._email = email
+
+
+
 
 

@@ -1,5 +1,4 @@
 import csv
-
 from File import saveToFile
 from logic import KsiazkaAdresowa
 
@@ -21,16 +20,15 @@ while again:
     elif user == 2:
         ksiazkaAdresowa.usunKontakt()
     elif user == 3:
-        ksiazkaAdresowa.wyszukajKontakt("+49")
-        pass
+        ksiazkaAdresowa.wyszukajKontakt()
     elif user == 4:
-        pass
+        ksiazkaAdresowa.edytujKontakt()
     elif user == 5:
         ksiazkaAdresowa.wyswietl()
     elif user == 6:
         ksiazkaAdresowa.imFeelingLucky()
     elif user == 7:
-        print(f"Dziękujemy za skorzystanie z naszego programu! Do zobaczenia {name}!")
+        print(f"Dziękujemy za skorzystanie z naszego programu! Do zobaczenia {name}")
         zapisz.save(ksiazkaAdresowa.dane)
         again = False
     else:
