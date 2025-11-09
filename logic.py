@@ -122,8 +122,7 @@ class KsiazkaAdresowa:
             print(kontakt)
 
     def imFeelingLucky(self):
-        ListofFreeIds = id_manager.freeid ## ta funkcje trzeba jakos naprawić
-        print(ListofFreeIds)
+        ListofFreeIds = id_manager.freeid 
         size = len(self.dane) + len(ListofFreeIds)
         random_number = random.randrange(1,size+1)
         while random_number in ListofFreeIds:
@@ -132,9 +131,6 @@ class KsiazkaAdresowa:
                 break
         for kontakt in self.dane:
             if kontakt.id == random_number:
-                print(size)
-                print(ListofFreeIds)
-                print(random_number)
                 print(kontakt)
 
     def saveToFile(self):
