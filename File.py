@@ -66,9 +66,9 @@ class loadLoginandPasswordFromFile(file):
 
 class DestroyData(file):
     def __init__(self):
-        super().__init__()
+        super().__init__("KsiazkaTelefoniczna.csv")
 
     def delete(self):
-        os.remove("KsiazkaTelefoniczna.csv")
+        os.remove(self.file)
 
 
