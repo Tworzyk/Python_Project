@@ -7,28 +7,28 @@ from models import Kontakt
 import csv
 
 class file(ABC):
-    def __init__(self,file = "KsiazkaTelefonicz.csv"):
+    def __init__(self,file):
         self.file = file
 
 
 class saveToFile(file):
     def __init__(self):
-        super().__init__()
+        super().__init__("KsiazkaTelefoniczna.csv")
 
     def save(self,list):
-        with open("KsiazkaTelefoniczna.csv","w") as file:
+        with open(self.file,"w") as file:
             writer = csv.writer(file)
             for i in list:
                 writer.writerow([i.name,i.surname,i.phone,i.email])
 
 class loadFromFile(file):
     def __init__(self):
-        super().__init__()
+        super().__init__("KsiazkaTelefoniczna.csv")
 
     def load(self):
         dane = []
         try:
-            with open("KsiazkaTelefoniczna.csv","r") as file:
+            with open(self.file,"r") as file:
                 reader = csv.reader(file)
                 for row in reader:
                     name = row[0]
@@ -42,19 +42,19 @@ class loadFromFile(file):
         return dane
 class saveLoginandPasswordToFile(file):
     def __init__(self):
-        super().__init__()
+        super().__init__(".LoginData.csv")
 
     def save(self,login,password):
-        with open(".LoginData.csv", "w") as file:
+        with open(self.file, "w") as file:
             writer = csv.writer(file)
             writer.writerow([login,password])
 class loadLoginandPasswordFromFile(file):
     def __init__(self):
-        super().__init__()
+        super().__init__(".LoginData.csv")
 
     def load(self):
         try:
-            with open(".LoginData.csv", "r") as file:
+            with open(self.file, "r") as file:
                 reader = csv.reader(file)
                 for row in reader:
                     login = row[0]
