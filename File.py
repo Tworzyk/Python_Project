@@ -1,6 +1,11 @@
 from abc import ABC
+from typing import Hashable
+import os
+from urllib3.filepost import writer
+
 from models import Kontakt
 import csv
+
 class file(ABC):
     def __init__(self,file = "KsiazkaTelefonicz.csv"):
         self.file = file
@@ -35,3 +40,35 @@ class loadFromFile(file):
         except FileNotFoundError:
             pass
         return dane
+class saveLoginandPasswordToFile(file):
+    def __init__(self):
+        super().__init__()
+
+    def save(self,login,password):
+        with open(".LoginData.csv", "w") as file:
+            writer = csv.writer(file)
+            writer.writerow([login,password])
+class loadLoginandPasswordFromFile(file):
+    def __init__(self):
+        super().__init__()
+
+    def load(self):
+        try:
+            with open(".LoginData.csv", "r") as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    login = row[0]
+                    password = row[1]
+                    return login,password
+        except FileNotFoundError:
+            print("Brak Pliku z danymi")
+            return None,None
+
+class DestroyData(file):
+    def __init__(self):
+        super().__init__()
+
+    def delete(self):
+        os.remove("KsiazkaTelefoniczna.csv")
+
+

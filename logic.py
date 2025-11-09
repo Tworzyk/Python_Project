@@ -5,13 +5,14 @@ from models import Kontakt, Kontakt_id, id_manager
 from logicdata import emailValidator, numberValidator, phoneUnique, emailUnique
 from File import saveToFile, loadFromFile
 
-
 class KsiazkaAdresowa:
+
 
     def __init__(self):
         wczytaj = loadFromFile()
         self.zapisz = saveToFile()
         self.dane = wczytaj.load()
+
 
 
     def dodajKontakt(self):
@@ -121,19 +122,23 @@ class KsiazkaAdresowa:
             print(kontakt)
 
     def imFeelingLucky(self):
-        ListofFreeIds = Kontakt_id.free_ids ## ta funkcje trzeba jakos naprawić
-        size = len(self.dane)
+        ListofFreeIds = id_manager.freeid ## ta funkcje trzeba jakos naprawić
+        print(ListofFreeIds)
+        size = len(self.dane) + len(ListofFreeIds)
         random_number = random.randrange(1,size+1)
-        while(random_number in ListofFreeIds.freeid):
-            if random_number not in ListofFreeIds.freeid:
+        while random_number in ListofFreeIds:
+            random_number = random.randrange(1, size + 1)
+            if random_number not in ListofFreeIds:
                 break
         for kontakt in self.dane:
             if kontakt.id == random_number:
                 print(size)
-                print(ListofFreeIds.freeid)
+                print(ListofFreeIds)
                 print(random_number)
                 print(kontakt)
 
+    def saveToFile(self):
+        self.zapisz.save(self.dane)
 
 
 

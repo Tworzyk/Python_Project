@@ -24,7 +24,7 @@ class numberValidator(validator):
     def checkifisvalid(self,phone):
 
         normalized = re.sub(r'[^\d+]', '', phone)
-        pattern = r'^\+?\d{7,15}$'
+        pattern = r'^\+\d{7,15}$'
         return bool(re.match(pattern,normalized))
 
 
